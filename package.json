@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "tsc && vite build",
+        "build": "node node_modules/typescript/bin/tsc && vite build",
         "dev": "vite"
     },
     "devDependencies": {
@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "lucide-react": "^1.14.0",
+        "react-is": "^19.2.6",
         "recharts": "^3.8.1",
         "ziggy-js": "^2.6.2"
     }

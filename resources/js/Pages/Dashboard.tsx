@@ -120,44 +120,53 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                     {/* Left Column: Robot List + Charts */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* System Performance Chart */}
-                        <div className="bg-[#0D1425] border border-white/5 p-6 rounded-[1.25rem] shadow-xl">
-                            <div className="flex justify-between items-center mb-6">
-                                <div>
-                                    <h3 className="text-sm font-black text-white">System Performance</h3>
-                                    <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Real-time efficiency monitoring</p>
+                        <div className="bg-[#0D1425] border border-[#00D1FF]/20 p-6 rounded-[1.25rem] shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#00D1FF]/5 via-transparent to-transparent opacity-50" />
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-center mb-6">
+                                    <div>
+                                        <h3 className="text-sm font-black text-white">System Performance</h3>
+                                        <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Real-time efficiency monitoring</p>
+                                    </div>
+                                    <button className="p-2 hover:bg-white/5 rounded-lg transition-all">
+                                        <Activity className="w-4 h-4 text-slate-500" />
+                                    </button>
                                 </div>
-                                <button className="p-2 hover:bg-white/5 rounded-lg transition-all">
-                                    <Activity className="w-4 h-4 text-slate-500" />
-                                </button>
+                                <ResponsiveContainer width="100%" height={280}>
+                                    <LineChart data={[
+                                        { name: 'Now', efficiency: 92 },
+                                        { name: 'Now', efficiency: 94 },
+                                        { name: 'Now', efficiency: 95 },
+                                        { name: 'Now', efficiency: 97 },
+                                        { name: 'Now', efficiency: 96 },
+                                        { name: 'Now', efficiency: 98 },
+                                        { name: 'Now', efficiency: 97 },
+                                    ]}>
+                                        <defs>
+                                            <linearGradient id="colorEfficiency" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#00D1FF" stopOpacity={0.3}/>
+                                                <stop offset="95%" stopColor="#00D1FF" stopOpacity={0}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '11px' }} />
+                                        <YAxis stroke="#64748b" style={{ fontSize: '11px' }} domain={[85, 100]} />
+                                        <Tooltip 
+                                            contentStyle={{ backgroundColor: '#0B1120', border: '1px solid rgba(0,209,255,0.2)', borderRadius: '0.5rem' }}
+                                            labelStyle={{ color: '#fff' }}
+                                        />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="efficiency" 
+                                            stroke="#00D1FF" 
+                                            strokeWidth={3}
+                                            dot={false}
+                                            fill="url(#colorEfficiency)"
+                                            isAnimationActive={true}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
                             </div>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <LineChart data={[
-                                    { name: 'Now', efficiency: 92 },
-                                    { name: 'Now', efficiency: 94 },
-                                    { name: 'Now', efficiency: 95 },
-                                    { name: 'Now', efficiency: 97 },
-                                    { name: 'Now', efficiency: 96 },
-                                    { name: 'Now', efficiency: 98 },
-                                    { name: 'Now', efficiency: 97 },
-                                ]}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} domain={[85, 100]} />
-                                    <Tooltip 
-                                        contentStyle={{ backgroundColor: '#0B1120', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.5rem' }}
-                                        labelStyle={{ color: '#fff' }}
-                                    />
-                                    <Line 
-                                        type="monotone" 
-                                        dataKey="efficiency" 
-                                        stroke="#00D1FF" 
-                                        strokeWidth={3}
-                                        dot={false}
-                                        fill="#00D1FF"
-                                        fillOpacity={0.1}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
                         </div>
 
                         {/* Robot List */}
@@ -212,66 +221,70 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                     </div>
 
                     {/* Right Column: Charts and Activity */}
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                         {/* Task Distribution Chart */}
-                        <div className="bg-[#0D1425] border border-white/5 rounded-[1.25rem] p-6 shadow-xl">
-                            <div className="flex justify-between items-center mb-6">
-                                <div>
-                                    <h3 className="text-sm font-black text-white">Task Distribution</h3>
-                                    <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Current assignments</p>
-                                </div>
-                            </div>
-                            <ResponsiveContainer width="100%" height={250}>
-                                <PieChart>
-                                    <Pie
-                                        data={[
-                                            { name: 'Assembly', value: 35, fill: '#A78BFA' },
-                                            { name: 'Quality', value: 25, fill: '#00D1FF' },
-                                            { name: 'Logistics', value: 20, fill: '#FF1493' },
-                                            { name: 'Processing', value: 15, fill: '#10B981' },
-                                        ]}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={90}
-                                        paddingAngle={2}
-                                        dataKey="value"
-                                    >
-                                        <Cell fill="#A78BFA" />
-                                        <Cell fill="#00D1FF" />
-                                        <Cell fill="#FF1493" />
-                                        <Cell fill="#10B981" />
-                                    </Pie>
-                                </PieChart>
-                            </ResponsiveContainer>
-                            <div className="mt-6 space-y-3">
-                                {[
-                                    { label: 'Assembly', value: '35%', color: 'bg-purple-400' },
-                                    { label: 'Quality', value: '25%', color: 'bg-[#00D1FF]' },
-                                    { label: 'Logistics', value: '20%', color: 'bg-pink-500' },
-                                    { label: 'Processing', value: '15%', color: 'bg-emerald-500' },
-                                ].map((item, i) => (
-                                    <div key={i} className="flex justify-between items-center text-[10px]">
-                                        <div className="flex items-center gap-2">
-                                            <div className={`w-2 h-2 rounded-full ${item.color}`} />
-                                            <span className="text-slate-400 font-semibold">{item.label}</span>
-                                        </div>
-                                        <span className="text-white font-black">{item.value}</span>
+                        <div className="bg-[#0D1425] border border-[#00D1FF]/20 rounded-[1.25rem] p-6 shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent opacity-50" />
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-center mb-6">
+                                    <div>
+                                        <h3 className="text-sm font-black text-white">Task Distribution</h3>
+                                        <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Current assignments</p>
                                     </div>
-                                ))}
+                                </div>
+                                <ResponsiveContainer width="100%" height={240}>
+                                    <PieChart>
+                                        <Pie
+                                            data={[
+                                                { name: 'Assembly', value: 35, fill: '#A78BFA' },
+                                                { name: 'Quality', value: 25, fill: '#00D1FF' },
+                                                { name: 'Logistics', value: 20, fill: '#FF1493' },
+                                                { name: 'Processing', value: 15, fill: '#10B981' },
+                                            ]}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={60}
+                                            outerRadius={85}
+                                            paddingAngle={3}
+                                            dataKey="value"
+                                            isAnimationActive={true}
+                                        >
+                                            <Cell fill="#A78BFA" />
+                                            <Cell fill="#00D1FF" />
+                                            <Cell fill="#FF1493" />
+                                            <Cell fill="#10B981" />
+                                        </Pie>
+                                    </PieChart>
+                                </ResponsiveContainer>
+                                <div className="mt-6 space-y-3">
+                                    {[
+                                        { label: 'Assembly', value: '35%', color: 'bg-purple-400' },
+                                        { label: 'Quality', value: '25%', color: 'bg-[#00D1FF]' },
+                                        { label: 'Logistics', value: '20%', color: 'bg-pink-500' },
+                                        { label: 'Processing', value: '15%', color: 'bg-emerald-500' },
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex justify-between items-center text-[10px]">
+                                            <div className="flex items-center gap-2">
+                                                <div className={`w-2 h-2 rounded-full ${item.color} shadow-[0_0_8px_currentColor]`} />
+                                                <span className="text-slate-300 font-semibold">{item.label}</span>
+                                            </div>
+                                            <span className="text-white font-black">{item.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
 
                         {/* System Activity Panel */}
-                        <div className="bg-[#0D1425] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
+                        <div className="bg-[#0D1425] border border-[#00D1FF]/20 rounded-[2.5rem] p-8 shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
                             {/* Subtle background glow */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#00D1FF]/5 blur-[80px] rounded-full" />
                             
-                            <h3 className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-10 border-b border-white/5 pb-4">System Activity</h3>
-                            <div className="space-y-8 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1.5px] before:bg-white/5">
+                            <h3 className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">System Activity</h3>
+                            <div className="space-y-6 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1.5px] before:bg-white/5">
                                 {recent_transactions.map((tx: any) => (
                                     <div key={tx.id} className="relative pl-8 group">
-                                        <div className="absolute left-0 top-1.5 w-[15px] h-[15px] bg-[#0B1120] border-[2px] border-slate-700 rounded-full z-10 group-hover:border-[#00D1FF] group-hover:shadow-[0_0_8px_#00D1FF] transition-all duration-300" />
+                                        <div className="absolute left-0 top-1.5 w-[15px] h-[15px] bg-[#0B1120] border-[2px] border-slate-700 rounded-full z-10 group-hover:border-[#00D1FF] group-hover:shadow-[0_0_12px_rgba(0,209,255,0.6)] transition-all duration-300" />
                                         <div>
                                             <p className="text-xs font-bold text-slate-200 leading-tight mb-1 group-hover:text-white transition-colors">{tx.description}</p>
                                             <p className="text-[9px] text-slate-500 font-bold uppercase tracking-tighter">
