@@ -60,4 +60,9 @@ class DashboardController extends Controller
         event(new \App\Events\RobotUpdated($robot));
         return back();
     }
+
+    public function aiControl(): Response
+    {
+        return Inertia::render('AIControl');
+    }
 }

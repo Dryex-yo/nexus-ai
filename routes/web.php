@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Robot;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -23,6 +24,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::get('/robot-management', [DashboardController::class, 'robotManagement'])
     ->middleware(['auth', 'verified'])
     ->name('robot.management');
+
+Route::get('/analytics', [AnalyticsController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('analytics');
+
+Route::get('/ai-control', [DashboardController::class, 'aiControl'])
+    ->middleware(['auth', 'verified'])
+    ->name('ai.control');
 
 Route::patch('/robots/{robot}/maintenance', [DashboardController::class, 'toggleMaintenance'])
     ->name('robots.maintenance');

@@ -1,4 +1,4 @@
-import { Head, router, Link } from '@inertiajs/react';
+import { Head, router, Link, usePage } from '@inertiajs/react';
 import { 
     LayoutDashboard, Bot, BarChart3, Cpu, Settings, 
     User, LogOut, Search, Bell, Zap, Activity, Shield, MapPin 
@@ -47,17 +47,17 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
 
                 <nav className="space-y-2 flex-1">
                     {[
-                        { icon: LayoutDashboard, label: 'Dashboard', active: true },
-                        { icon: Bot, label: 'Robot Management' },
-                        { icon: BarChart3, label: 'Analytics' },
-                        { icon: Cpu, label: 'AI Control' },
-                        { icon: Settings, label: 'Settings' },
-                        { icon: User, label: 'Profile' },
+                        { icon: LayoutDashboard, label: 'Dashboard', active: true, href: '/dashboard' },
+                        { icon: Bot, label: 'Robot Management', active: false, href: '/robot-management' },
+                        { icon: BarChart3, label: 'Analytics', active: false, href: '/analytics' },
+                        { icon: Cpu, label: 'AI Control', active: false, href: '/ai-control' },
+                        { icon: Settings, label: 'Settings', active: false },
+                        { icon: User, label: 'Profile', active: false },
                     ].map((item) => (
-                        <div key={item.label} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-[#152033] text-[#00D1FF] border border-cyan-500/20 shadow-[0_0_15px_rgba(0,209,255,0.05)]' : 'hover:bg-white/5 text-slate-500'}`}>
+                        <Link key={item.label} href={item.href || '#'} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-[#152033] text-[#00D1FF] border border-cyan-500/20 shadow-[0_0_15px_rgba(0,209,255,0.05)]' : 'hover:bg-white/5 text-slate-500'}`}>
                             <item.icon className={`w-5 h-5 ${item.active ? 'text-[#00D1FF]' : ''}`} />
                             <span className="text-sm font-bold tracking-tight">{item.label}</span>
-                        </div>
+                        </Link>
                     ))}
                 </nav>
 
