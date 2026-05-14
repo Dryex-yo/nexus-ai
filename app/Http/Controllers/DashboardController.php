@@ -39,6 +39,11 @@ class DashboardController extends Controller
             ],
         ]);
     }
+
+    public function settings(): Response
+    {
+        return Inertia::render('Settings');
+    }
     
     public function toggleMaintenance(Robot $robot)
     {

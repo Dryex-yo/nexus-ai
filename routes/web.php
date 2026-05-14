@@ -33,6 +33,10 @@ Route::get('/ai-control', [DashboardController::class, 'aiControl'])
     ->middleware(['auth', 'verified'])
     ->name('ai.control');
 
+Route::get('/settings', [DashboardController::class, 'settings'])
+    ->middleware(['auth', 'verified'])
+    ->name('settings');
+
 Route::patch('/robots/{robot}/maintenance', [DashboardController::class, 'toggleMaintenance'])
     ->name('robots.maintenance');
     

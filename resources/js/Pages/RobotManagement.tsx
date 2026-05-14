@@ -102,8 +102,8 @@ export default function RobotManagement({ robots, stats }: any) {
                         { icon: Bot, label: 'Robot Management', active: true, href: '/robot-management' },
                         { icon: BarChart3, label: 'Analytics', active: false, href: '/analytics' },
                         { icon: Cpu, label: 'AI Control', active: false, href: '/ai-control' },
-                        { icon: Settings, label: 'Settings', active: false },
-                        { icon: User, label: 'Profile', active: false },
+                        { icon: Settings, label: 'Settings', active: false, href: '/settings' },
+                        { icon: User, label: 'Profile', active: false, href: '/profile' },
                     ].map((item) => (
                         <Link key={item.label} href={item.href || '#'} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-[#152033] text-[#00D1FF] border border-cyan-500/20 shadow-[0_0_15px_rgba(0,209,255,0.05)]' : 'hover:bg-white/5 text-slate-500'}`}>
                             <item.icon className={`w-5 h-5 ${item.active ? 'text-[#00D1FF]' : ''}`} />
