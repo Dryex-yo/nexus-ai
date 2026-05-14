@@ -2,8 +2,9 @@ import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import {
     LayoutDashboard, Bot, BarChart3, Cpu, Settings as SettingsIcon,
-    User, LogOut, Search, Bell, Moon, Globe, Clock3, ToggleRight
+    User, LogOut, Bell, Moon, Globe, Clock3, ToggleRight
 } from 'lucide-react';
+import TopHeader from '@/Components/TopHeader';
 
 export default function Settings() {
     const [darkMode, setDarkMode] = useState(true);
@@ -56,31 +57,7 @@ export default function Settings() {
             </aside>
 
             <main className="flex-1 p-8 overflow-y-auto">
-                <header className="flex justify-between items-center mb-10">
-                    <div>
-                        <h2 className="text-2xl font-black text-white tracking-tight">Settings</h2>
-                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.4em]">Advanced AI System</p>
-                    </div>
-
-                    <div className="flex items-center gap-6">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                            <input
-                                type="text"
-                                placeholder="Search settings..."
-                                className="bg-[#0D1425] border border-white/5 rounded-full py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-600 focus:border-[#00D1FF]/50 outline-none w-64 transition-all"
-                            />
-                        </div>
-                        <Bell className="w-5 h-5 text-slate-500 hover:text-white cursor-pointer" />
-                        <div className="flex items-center gap-3 border-l border-white/10 pl-6 text-right">
-                            <div className="hidden md:block">
-                                <p className="text-xs font-black text-white leading-none uppercase tracking-widest">Alex Chen</p>
-                                <p className="text-[9px] text-[#00D1FF] font-bold uppercase mt-1.5">System Administrator</p>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-[#00D1FF] border-2 border-[#0B1120] flex items-center justify-center font-black text-white shadow-lg">A</div>
-                        </div>
-                    </div>
-                </header>
+                <TopHeader title="Settings" subtitle="Advanced AI System" searchPlaceholder="Search settings, preferences, or themes..." />
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">
