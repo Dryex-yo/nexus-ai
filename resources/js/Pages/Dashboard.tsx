@@ -1,4 +1,4 @@
-import { Head, router } from '@inertiajs/react';
+import { Head, router, Link } from '@inertiajs/react';
 import { 
     LayoutDashboard, Bot, BarChart3, Cpu, Settings, 
     User, LogOut, Search, Bell, Zap, Activity, Shield, MapPin 
@@ -221,7 +221,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                     </div>
 
                     {/* Right Column: Charts and Activity */}
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                         {/* Task Distribution Chart */}
                         <div className="bg-[#0D1425] border border-[#00D1FF]/20 rounded-[1.25rem] p-6 shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent opacity-50" />
@@ -276,15 +276,15 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                         </div>
 
                         {/* System Activity Panel */}
-                        <div className="bg-[#0D1425] border border-[#00D1FF]/20 rounded-[2.5rem] p-8 shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
+                        <div className="bg-[#0D1425] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
                             {/* Subtle background glow */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#00D1FF]/5 blur-[80px] rounded-full" />
                             
-                            <h3 className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">System Activity</h3>
-                            <div className="space-y-6 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1.5px] before:bg-white/5">
+                            <h3 className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-10 border-b border-white/5 pb-4">System Activity</h3>
+                            <div className="space-y-8 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1.5px] before:bg-white/5">
                                 {recent_transactions.map((tx: any) => (
                                     <div key={tx.id} className="relative pl-8 group">
-                                        <div className="absolute left-0 top-1.5 w-[15px] h-[15px] bg-[#0B1120] border-[2px] border-slate-700 rounded-full z-10 group-hover:border-[#00D1FF] group-hover:shadow-[0_0_12px_rgba(0,209,255,0.6)] transition-all duration-300" />
+                                        <div className="absolute left-0 top-1.5 w-[15px] h-[15px] bg-[#0B1120] border-[2px] border-slate-700 rounded-full z-10 group-hover:border-[#00D1FF] group-hover:shadow-[0_0_8px_#00D1FF] transition-all duration-300" />
                                         <div>
                                             <p className="text-xs font-bold text-slate-200 leading-tight mb-1 group-hover:text-white transition-colors">{tx.description}</p>
                                             <p className="text-[9px] text-slate-500 font-bold uppercase tracking-tighter">

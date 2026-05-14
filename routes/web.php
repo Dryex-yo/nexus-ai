@@ -20,6 +20,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/robot-management', [DashboardController::class, 'robotManagement'])
+    ->middleware(['auth', 'verified'])
+    ->name('robot.management');
+
 Route::patch('/robots/{robot}/maintenance', [DashboardController::class, 'toggleMaintenance'])
     ->name('robots.maintenance');
     

@@ -24,6 +24,21 @@ class DashboardController extends Controller
                     ->get(),
         ]);
     }
+
+    public function robotManagement(): Response
+    {
+        return Inertia::render('RobotManagement', [
+            'robots' => Robot::all(),
+            'stats' => [
+                'total_robots' => Robot::count(),
+                'total_online' => Robot::where('status', 'ONLINE')->count(),
+                'total_warning' => Robot::where('status', 'WARNING')->count(),
+                'total_offline' => Robot::where('status', 'OFFLINE')->count(),
+                'total_maintenance' => Robot::where('status', 'MAINTENANCE')->count(),
+                'avg_efficiency' => Robot::avg('efficiency'),
+            ],
+        ]);
+    }
     
     public function toggleMaintenance(Robot $robot)
     {

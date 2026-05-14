@@ -17,10 +17,11 @@ class Robot extends Model
     protected $fillable = [
         'name',
         'model',
-        'status',   // <--- Tambahkan ini untuk memperbaiki error
+        'status',
         'battery',
         'efficiency',
         'location',
+        'task',
     ];
 
     // Tambahkan ini di app/Models/Robot.php
