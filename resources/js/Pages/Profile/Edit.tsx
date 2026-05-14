@@ -14,7 +14,7 @@ import {
     ArrowRight,
     Edit3,
 } from 'lucide-react';
-import TopHeader from '@/Components/TopHeader';
+import AppShell from '@/Layouts/AppShell';
 
 export default function Edit() {
     const user = usePage().props.auth.user as any;
@@ -47,59 +47,10 @@ export default function Edit() {
     ];
 
     return (
-        <div className="flex min-h-screen bg-[#0B1120] text-slate-300 font-sans antialiased">
+        <AppShell title="Profile" subtitle="Your account overview and settings" searchPlaceholder="Search your profile settings...">
             <Head title="Nexus AI - Profile" />
 
-            <aside className="w-64 border-r border-white/5 bg-[#0B1224] flex flex-col p-6 overflow-hidden">
-                <div className="flex items-center gap-3 mb-10 px-2">
-                    <div className="w-10 h-10 bg-[#00D1FF] rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(0,209,255,0.4)]">
-                        <Sparkles className="text-white fill-current w-5 h-5" />
-                    </div>
-                    <div>
-                        <h1 className="text-white font-black tracking-tighter leading-none text-xl">NEXUS AI</h1>
-                        <p className="text-[9px] text-[#00D1FF] font-bold uppercase tracking-[0.2em] mt-1">Robot Management</p>
-                    </div>
-                </div>
-
-                <nav className="space-y-2 flex-1">
-                    {[
-                        { icon: LayoutDashboard, label: 'Dashboard', active: false, href: '/dashboard' },
-                        { icon: Bot, label: 'Robot Management', active: false, href: '/robot-management' },
-                        { icon: BarChart3, label: 'Analytics', active: false, href: '/analytics' },
-                        { icon: Cpu, label: 'AI Control', active: false, href: '/ai-control' },
-                        { icon: Settings, label: 'Settings', active: false, href: '/settings' },
-                        { icon: User, label: 'Profile', active: true, href: '/profile' },
-                    ].map((item) => (
-                        <Link
-                            key={item.label}
-                            href={item.href || '#'}
-                            className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 ${
-                                item.active
-                                    ? 'bg-[#152033] text-[#00D1FF] border border-cyan-500/20 shadow-[0_0_15px_rgba(0,209,255,0.05)]'
-                                    : 'hover:bg-white/5 text-slate-500'
-                            }`}
-                        >
-                            <item.icon className={`w-5 h-5 ${item.active ? 'text-[#00D1FF]' : ''}`} />
-                            <span className="text-sm font-bold tracking-tight">{item.label}</span>
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className="mt-auto pt-6 border-t border-white/5">
-                    <Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                        className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-red-400 rounded-xl transition-colors w-full"
-                    >
-                        <LogOut className="w-5 h-5" />
-                        <span className="text-sm font-bold">Logout</span>
-                    </Link>
-                </div>
-            </aside>
-
             <main className="flex-1 p-8 overflow-y-auto">
-                <TopHeader title="Profile" subtitle="Your account overview and settings" searchPlaceholder="Search your profile settings..." />
 
                 <div className="grid gap-8">
                     <div className="bg-[#0D1425] border border-[#00D1FF]/20 rounded-[1.5rem] p-8 shadow-[0_20px_60px_rgba(0,209,255,0.08)] overflow-hidden relative">
@@ -214,6 +165,6 @@ export default function Edit() {
                     </div>
                 </div>
             </main>
-        </div>
+        </AppShell>
     );
 }

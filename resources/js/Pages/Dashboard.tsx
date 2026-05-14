@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { useEffect } from 'react';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import TopHeader from '@/Components/TopHeader';
+import AppShell from '@/Layouts/AppShell';
 
 export default function Dashboard({ robots, stats, recent_transactions }: any) {
     
@@ -29,49 +29,10 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
     }, []);
 
     return (
-        <div className="flex min-h-screen bg-[#0B1120] text-slate-400 font-sans antialiased">
+        <AppShell title="Dashboard" subtitle="Advanced AI System" searchPlaceholder="Search robots, tasks, or metrics...">
             <Head title="Nexus AI - Robot Management" />
 
-            {/* Sidebar Kiri: #0B1224 */}
-            <aside className="w-64 border-r border-white/5 bg-[#0B1224] flex flex-col p-6 overflow-hidden">
-                <div className="flex items-center gap-3 mb-10 px-2">
-                    {/* Icon dengan Glow Cyan pekat */}
-                    <div className="w-10 h-10 bg-[#00D1FF] rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(0,209,255,0.4)]">
-                        <Zap className="text-white fill-current w-5 h-5" />
-                    </div>
-                    <div>
-                        <h1 className="text-white font-black tracking-tighter leading-none text-xl">NEXUS AI</h1>
-                        <p className="text-[9px] text-[#00D1FF] font-bold uppercase tracking-[0.2em] mt-1">Robot Management</p>
-                    </div>
-                </div>
-
-                <nav className="space-y-2 flex-1">
-                    {[
-                        { icon: LayoutDashboard, label: 'Dashboard', active: true, href: '/dashboard' },
-                        { icon: Bot, label: 'Robot Management', active: false, href: '/robot-management' },
-                        { icon: BarChart3, label: 'Analytics', active: false, href: '/analytics' },
-                        { icon: Cpu, label: 'AI Control', active: false, href: '/ai-control' },
-                        { icon: Settings, label: 'Settings', active: false, href: '/settings' },
-                        { icon: User, label: 'Profile', active: false, href: '/profile' },
-                    ].map((item) => (
-                        <Link key={item.label} href={item.href || '#'} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-[#152033] text-[#00D1FF] border border-cyan-500/20 shadow-[0_0_15px_rgba(0,209,255,0.05)]' : 'hover:bg-white/5 text-slate-500'}`}>
-                            <item.icon className={`w-5 h-5 ${item.active ? 'text-[#00D1FF]' : ''}`} />
-                            <span className="text-sm font-bold tracking-tight">{item.label}</span>
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className="mt-auto pt-6 border-t border-white/5">
-                    <div className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-red-400 cursor-pointer transition-colors group">
-                        <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                        <span className="text-sm font-bold">Logout</span>
-                    </div>
-                </div>
-            </aside>
-
-            {/* Main Content Area */}
             <main className="flex-1 p-8 overflow-y-auto">
-                <TopHeader title="Dashboard" subtitle="Advanced AI System" searchPlaceholder="Search robots, tasks, or metrics..." />
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-10">
                     {/* Stats Card - Sesuai Card di image_d4c4d0.png */}
@@ -81,13 +42,13 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                         { label: 'Warnings', val: '1', sub: 'Needs attention', icon: Zap, color: 'text-amber-400' },
                         { label: 'Avg Efficiency', val: `${Number(stats.avg_efficiency).toFixed(1)}%`, sub: '+2.3% today', icon: Shield, color: 'text-purple-400' },
                     ].map((s, i) => (
-                        <div key={i} className="bg-[#0D1425] border border-white/5 p-6 rounded-[1.25rem] relative hover:border-white/10 transition-all shadow-xl">
+                        <div key={i} className="bg-[#152033]/30 backdrop-blur-md border border-white/5 p-6 rounded-2xl transition-all shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
                             <div className="flex justify-between items-start mb-4">
                                 <div>
-                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{s.label}</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{s.label}</p>
                                     <h4 className="text-3xl font-black text-white leading-none tracking-tight">{s.val}</h4>
                                 </div>
-                                <div className="bg-[#161F32] p-2.5 rounded-xl border border-white/5 shadow-inner">
+                                <div className="bg-[#09101F] p-2.5 rounded-xl border border-white/5 shadow-inner">
                                     <s.icon className={`w-5 h-5 ${s.color}`} />
                                 </div>
                             </div>
@@ -100,7 +61,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                     {/* Left Column: Robot List + Charts */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* System Performance Chart */}
-                        <div className="bg-[#0D1425] border border-[#00D1FF]/20 p-6 rounded-[1.25rem] shadow-[0_8px_32px_rgba(0,209,255,0.15)] relative overflow-hidden">
+                        <div className="bg-[#152033]/30 backdrop-blur-md border border-white/5 p-6 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-r from-[#00D1FF]/5 via-transparent to-transparent opacity-50" />
                             <div className="relative z-10">
                                 <div className="flex justify-between items-center mb-6">
@@ -157,7 +118,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                             </div>
                             
                             {robots.map((robot: any) => (
-                                <div key={robot.id} className="bg-[#0D1425] border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-[#11192C] transition-all duration-300">
+                                <div key={robot.id} className="bg-[#152033]/30 backdrop-blur-md border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-[#11192C] transition-all duration-300">
                                     <div className="flex items-center gap-5">
                                         <div className="w-12 h-12 bg-[#161F32] rounded-xl flex items-center justify-center border border-white/5 group-hover:border-white/10">
                                             <Bot className="w-6 h-6 text-[#00D1FF]/70" />
@@ -256,7 +217,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                         </div>
 
                         {/* System Activity Panel */}
-                        <div className="bg-[#0D1425] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
+                        <div className="bg-[#152033]/30 backdrop-blur-md border border-white/5 rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             {/* Subtle background glow */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#00D1FF]/5 blur-[80px] rounded-full" />
                             
@@ -278,6 +239,6 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                     </div>
                 </div>
             </main>
-        </div>
+        </AppShell>
     );
 }
