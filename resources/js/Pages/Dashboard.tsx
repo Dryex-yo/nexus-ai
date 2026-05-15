@@ -3,12 +3,74 @@ import {
     LayoutDashboard, Bot, BarChart3, Cpu, Settings,
     User, LogOut, Zap, Activity, Shield, MapPin
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import AppShell from '@/Layouts/AppShell';
 
 export default function Dashboard({ robots, stats, recent_transactions }: any) {
-    
+    const [searchQuery, setSearchQuery] = useState('');
+    const filteredRobots = Array.isArray(robots)
+        ? robots.filter((robot: any) => {
+              const query = searchQuery.toLowerCase();
+              return (
+                  robot.name?.toLowerCase().includes(query) ||
+                  robot.model?.toLowerCase().includes(query) ||
+                  robot.location?.toLowerCase().includes(query) ||
+                  robot.status?.toLowerCase().includes(query)
+              );
+          })
+        : [];
+
+    const robotRows = filteredRobots.map((robot: any) => (
+        <div key={robot.id} className="bg-[#152033]/30 backdrop-blur-md border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-[#11192C] transition-all duration-300">
+            <div className="flex items-center gap-5">
+                <div className="w-12 h-12 bg-[#161F32] rounded-xl flex items-center justify-center border border-white/5 group-hover:border-white/10">
+                    <Bot className="w-6 h-6 text-[#00D1FF]/70" />
+                </div>
+                <div>
+                    <div className="flex items-center gap-2">
+                        <h4 className="text-sm font-black text-white">{robot.name}</h4>
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]" />
+                    </div>
+                    <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1 italic">{robot.model}</p>
+                </div>
+            </div>
+
+            <div className="flex items-center gap-12">
+                <div className="hidden md:block">
+                    <p className="text-[9px] font-bold text-slate-500 uppercase mb-2">Battery Status</p>
+                    <div className="flex items-center gap-3">
+                        <div className="w-24 h-2 bg-[#161F32] rounded-full overflow-hidden shadow-inner">
+                            <div className="h-full bg-[#00D1FF] shadow-[0_0_12px_rgba(0,209,255,0.6)] transition-all duration-1000" style={{ width: robot.battery + '%' }} />
+                        </div>
+                        <span className="text-[10px] font-black text-slate-300">{robot.battery}%</span>
+                    </div>
+                </div>
+                <div className="text-right">
+                    <p className="text-[9px] font-bold text-slate-500 uppercase mb-1">Operational Area</p>
+                    <div className="flex items-center gap-1.5 justify-end">
+                        <MapPin className="w-3 h-3 text-red-500 fill-red-500/20" />
+                        <span className="text-xs font-bold text-white">{robot.location}</span>
+                    </div>
+                </div>
+                <button
+                    onClick={() => toggleMaintenance(robot.id)}
+                    className="px-6 py-2.5 rounded-xl bg-[#161F32] border border-white/5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 hover:border-[#00D1FF]/50 hover:text-[#00D1FF] hover:bg-[#1c2841] transition-all shadow-lg active:scale-95"
+                >
+                    {robot.status === 'MAINTENANCE' ? 'Resume' : 'Maintain'}
+                </button>
+            </div>
+        </div>
+    ));
+
+    const robotList = filteredRobots.length === 0 ? (
+        <div className="rounded-2xl border border-white/5 bg-[#152033]/30 p-6 text-sm text-slate-400">
+            No robots match your search. Try another keyword.
+        </div>
+    ) : (
+        robotRows
+    );
+
     // Perbaikan fungsi dari image_d4c815.jpg
     const toggleMaintenance = (id: number) => {
         router.patch(`/dashboard/robots/${id}/maintenance`, {}, {
@@ -29,7 +91,13 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
     }, []);
 
     return (
-        <AppShell title="Dashboard" subtitle="Advanced AI System" searchPlaceholder="Search robots, tasks, or metrics...">
+        <AppShell
+            title="Dashboard"
+            subtitle="Advanced AI System"
+            searchPlaceholder="Search robots, models, locations..."
+            searchValue={searchQuery}
+            onSearchChange={setSearchQuery}
+        >
             <Head title="Nexus AI - Robot Management" />
 
             <main className="flex-1 p-8 overflow-y-auto">
@@ -113,11 +181,21 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                         {/* Robot List */}
                         <div className="space-y-4">
                             <div className="flex justify-between items-center mb-2 px-2">
-                                <h3 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.25em]">Robot Status Overview</h3>
-                                <button className="text-[10px] font-bold text-[#00D1FF] hover:underline">View All</button>
+                            <h3 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.25em]">Robot Status Overview</h3>
+                            <Link
+                                href="/robot-management"
+                                className="text-[10px] font-bold text-[#00D1FF] transition hover:text-white"
+                            >
+                                View All
+                            </Link>
+                        </div>
+
+                        {filteredRobots.length === 0 ? (
+                            <div className="rounded-2xl border border-white/5 bg-[#152033]/30 p-6 text-sm text-slate-400">
+                                No robots match your search. Try another keyword.
                             </div>
-                            
-                            {robots.map((robot: any) => (
+                        ) : (
+                            filteredRobots.map((robot: any) => (
                                 <div key={robot.id} className="bg-[#152033]/30 backdrop-blur-md border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-[#11192C] transition-all duration-300">
                                     <div className="flex items-center gap-5">
                                         <div className="w-12 h-12 bg-[#161F32] rounded-xl flex items-center justify-center border border-white/5 group-hover:border-white/10">
@@ -137,7 +215,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                                             <p className="text-[9px] font-bold text-slate-500 uppercase mb-2">Battery Status</p>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-24 h-2 bg-[#161F32] rounded-full overflow-hidden shadow-inner">
-                                                    <div className="h-full bg-[#00D1FF] shadow-[0_0_12px_rgba(0,209,255,0.6)] transition-all duration-1000" style={{ width: `${robot.battery}%` }} />
+                                                    <div className="h-full bg-[#00D1FF] shadow-[0_0_12px_rgba(0,209,255,0.6)] transition-all duration-1000" style={{ width: robot.battery + '%' }} />
                                                 </div>
                                                 <span className="text-[10px] font-black text-slate-300">{robot.battery}%</span>
                                             </div>
@@ -157,7 +235,7 @@ export default function Dashboard({ robots, stats, recent_transactions }: any) {
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                            )))}
                         </div>
                     </div>
 
